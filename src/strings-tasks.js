@@ -36,10 +36,13 @@ function getStringLength(value) {
  *   isString([]) => false
  *   isString({}) => false
  *   isString('test') => true
- *   isString(new String('test')) => true
+ *   isString(new String('test')) => true vvv.__proto__  === String.prototype
  */
 function isString(v) {
   if (typeof v === 'string') return true;
+  if (typeof v === 'object') {
+    // if (v.__proto__ === String.prototype) return true;
+  }
   return false;
 }
 
@@ -56,7 +59,7 @@ function isString(v) {
  *   concatenateStrings('', 'bb') => 'bb'
  */
 function concatenateStrings(v1, v2) {
-  return v1 + v2;
+  return `${v1}${v2}`;
 }
 
 /**
@@ -71,7 +74,8 @@ function concatenateStrings(v1, v2) {
  *   getFirstChar('') => ''
  */
 function getFirstChar(value) {
-  return value[0];
+  if (value.length >= 1) return value[0];
+  return '';
 }
 
 /**
@@ -133,6 +137,7 @@ function removeTrailingWhitespaces(value) {
  *   repeatString('abc', -2) => ''
  */
 function repeatString(str, times) {
+  if (times <= 0) return '';
   return str.repeat(times);
 }
 
@@ -149,6 +154,7 @@ function repeatString(str, times) {
  *   removeFirstOccurrences('ABABAB', 'BA') => 'ABAB'.
  */
 function removeFirstOccurrences(str, value) {
+  if (value.length <= 0 || str.indexOf(value) < 0) return str;
   return (
     str.slice(0, str.indexOf(value)) +
     str.slice(str.indexOf(value) + value.length)
@@ -167,8 +173,12 @@ function removeFirstOccurrences(str, value) {
  *   removeLastOccurrences('I like legends', 'end') => 'I like legs'.
  *   removeLastOccurrences('ABABAB', 'BA') => 'ABAB'.
  */
-function removeLastOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeLastOccurrences(str, value) {
+  if (value.length <= 0 || str.lastIndexOf(value) < 0) return str;
+  return (
+    str.slice(0, str.lastIndexOf(value)) +
+    str.slice(str.lastIndexOf(value) + value.length)
+  );
 }
 
 /**
@@ -183,8 +193,9 @@ function removeLastOccurrences(/* str, value */) {
  *   sumOfCodes('') => 0
  *   sumOfCodes() => 0
  */
-function sumOfCodes(/* str */) {
-  throw new Error('Not implemented');
+function sumOfCodes(str) {
+  if (str === undefined || str === null || str.length < 0) return 0;
+  return str.split('').reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
 }
 
 /**
@@ -199,7 +210,7 @@ function sumOfCodes(/* str */) {
  *   startsWith('Hello World', 'Hello') => true
  */
 function startsWith(str, substr) {
-  return str.startWith(substr);
+  return str.startsWith(substr);
 }
 
 /**
@@ -214,7 +225,7 @@ function startsWith(str, substr) {
  *   endsWith('Hello World', 'Hello') => false
  */
 function endsWith(str, substr) {
-  return str.endWith(substr);
+  return str.endsWith(substr);
 }
 
 /**
@@ -230,8 +241,11 @@ function endsWith(str, substr) {
  *   formatTime(0, 45) => "00:45"
  *   formatTime(0, 0) => "00:00"
  */
-function formatTime(/* minutes, seconds */) {
-  throw new Error('Not implemented');
+function formatTime(minutes, seconds) {
+  return (
+    `${minutes < 10 ? '0' : ''}${String(minutes)}` +
+    `:${seconds < 10 ? '0' : ''}${String(seconds)}`
+  );
 }
 
 /**
@@ -244,8 +258,8 @@ function formatTime(/* minutes, seconds */) {
  *   reverseString('abcdef') => 'fedcba'
  *   reverseString('12345') => '54321'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 /**
