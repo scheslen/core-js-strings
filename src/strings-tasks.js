@@ -40,9 +40,8 @@ function getStringLength(value) {
  */
 function isString(v) {
   if (typeof v === 'string') return true;
-  if (typeof v === 'object') {
-    // if (v.__proto__ === String.prototype) return true;
-  }
+  if (typeof v === 'object' && v !== null && typeof v.valueOf() === 'string')
+    return true;
   return false;
 }
 
@@ -59,7 +58,8 @@ function isString(v) {
  *   concatenateStrings('', 'bb') => 'bb'
  */
 function concatenateStrings(v1, v2) {
-  return `${v1}${v2}`;
+  // return `${v1}${v2}`;
+  return v1.concat(v2);
 }
 
 /**
@@ -74,8 +74,9 @@ function concatenateStrings(v1, v2) {
  *   getFirstChar('') => ''
  */
 function getFirstChar(value) {
-  if (value.length >= 1) return value[0];
-  return '';
+  // if (value.length >= 1) return value[0];
+  // return '';
+  return value.charAt(0);
 }
 
 /**
@@ -273,8 +274,8 @@ function reverseString(str) {
  *   orderAlphabetically('textbook') => 'bekoottx'
  *   orderAlphabetically('abc123xyz') => '123abcxyz'
  */
-function orderAlphabetically(/* str */) {
-  throw new Error('Not implemented');
+function orderAlphabetically(str) {
+  return str.split('').sort().join('');
 }
 
 /**
