@@ -290,8 +290,8 @@ function orderAlphabetically(str) {
  *   containsSubstring('JavaScript is Fun', 'Python') => false
  *   containsSubstring('12345', '34') => true
  */
-function containsSubstring(/* str, substring */) {
-  throw new Error('Not implemented');
+function containsSubstring(str, substring) {
+  return str.includes(substring);
 }
 
 /**
@@ -308,8 +308,11 @@ function containsSubstring(/* str, substring */) {
  *   countVowels('aEiOu') => 5
  *   countVowels('XYZ') => 1
  */
-function countVowels(/* str */) {
-  throw new Error('Not implemented');
+function countVowels(str) {
+  if (str === undefined || str === null || str.length < 0) return 0;
+  return str
+    .split('')
+    .reduce((qV, s) => ('aeiouyAEIOUY'.includes(s) ? qV + 1 : qV), 0);
 }
 
 /**
@@ -325,8 +328,20 @@ function countVowels(/* str */) {
  *   isPalindrome('apple') => false
  *   isPalindrome('No lemon, no melon') => true
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  return (
+    str
+      .trim()
+      .toLowerCase()
+      .replaceAll(/[ ,!?]/g, '') ===
+    str
+      .trim()
+      .toLowerCase()
+      .replaceAll(/[ ,!?]/g, '')
+      .split('')
+      .reverse()
+      .join('')
+  );
 }
 
 /**
@@ -341,8 +356,17 @@ function isPalindrome(/* str */) {
  *   findLongestWord('A long and winding road') => 'winding'
  *   findLongestWord('No words here') => 'words'
  */
-function findLongestWord(/* sentence */) {
-  throw new Error('Not implemented');
+function findLongestWord(sentence) {
+  const aStr = sentence.split(/[.,:;!?]?\s+/);
+  let lL = aStr[0].length;
+  let lW = aStr[0];
+  for (let i = 1; i < aStr.length; i += 1) {
+    if (lL < aStr[i].length) {
+      lL = aStr[i].length;
+      lW = aStr[i];
+    }
+  }
+  return lW;
 }
 
 /**
@@ -355,8 +379,9 @@ function findLongestWord(/* sentence */) {
  *   reverseWords('Hello World') => 'olleH dlroW'
  *   reverseWords('The Quick Brown Fox') => 'ehT kciuQ nworB xoF'
  */
-function reverseWords(/* str */) {
-  throw new Error('Not implemented');
+function reverseWords(str) {
+  //  return str.split(/[.,:;!?]?\s+/).map.join();
+  return str;
 }
 
 /**
