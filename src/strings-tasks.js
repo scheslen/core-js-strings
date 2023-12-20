@@ -243,10 +243,9 @@ function endsWith(str, substr) {
  *   formatTime(0, 0) => "00:00"
  */
 function formatTime(minutes, seconds) {
-  return (
-    `${minutes < 10 ? '0' : ''}${String(minutes)}` +
-    `:${seconds < 10 ? '0' : ''}${String(seconds)}`
-  );
+  return `${minutes < 10 ? '0' : ''}${String(minutes)}:${
+    seconds < 10 ? '0' : ''
+  }${String(seconds)}`;
 }
 
 /**
@@ -455,8 +454,8 @@ function getStringFromTemplate(firstName, lastName) {
  *   extractNameFromTemplate('Hello, John Doe!') => 'John Doe'
  *   extractNameFromTemplate('Hello, Chuck Norris!') => 'Chuck Norris'
  */
-function extractNameFromTemplate(/* value */) {
-  throw new Error('Not implemented');
+function extractNameFromTemplate(value) {
+  return value.slice(value.indexOf(', ') + 2, -1);
 }
 
 /**
@@ -470,8 +469,12 @@ function extractNameFromTemplate(/* value */) {
  *   unbracketTag('<span>') => 'span'
  *   unbracketTag('<a>') => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  return (
+    str.slice(0, str.indexOf('<')) +
+    str.slice(str.indexOf('<') + 1, str.lastIndexOf('>')) +
+    str.slice(str.lastIndexOf('>') + 1)
+  );
 }
 
 /**
@@ -489,8 +492,8 @@ function unbracketTag(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -509,8 +512,13 @@ function extractEmails(/* str */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  return str.replace(/[A-Za-z]/g, (c) => {
+    let c13 = c.charCodeAt();
+    if ((c13 >= 65 && c13 <= 77) || (c13 >= 97 && c13 <= 109)) c13 += 13;
+    else if ((c13 >= 78 && c13 <= 90) || (c13 >= 110 && c13 <= 122)) c13 -= 13;
+    return String.fromCharCode(c13);
+  });
 }
 
 /**
@@ -537,8 +545,63 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const aCards = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+
+  return aCards.indexOf(value);
 }
 
 module.exports = {
