@@ -380,8 +380,26 @@ function findLongestWord(sentence) {
  *   reverseWords('The Quick Brown Fox') => 'ehT kciuQ nworB xoF'
  */
 function reverseWords(str) {
-  //  return str.split(/[.,:;!?]?\s+/).map.join();
-  return str;
+  let sResult = '';
+  let p1 = 0;
+  let p2 = 1;
+
+  while (p2 > -1 && str.slice(p1).length > 0) {
+    // p2 = str.slice(p1).search (/[.,:;!?]?\s+/);
+    p2 = str.slice(p1).indexOf(' ');
+    if (p2 > -1) {
+      sResult += `${str
+        .slice(p1, p1 + p2)
+        .split('')
+        .reverse()
+        .join('')} `;
+      p1 = p1 + p2 + 1;
+    }
+  }
+  if (str.slice(p1).length > 0)
+    sResult += str.slice(p1).split('').reverse().join('');
+
+  return sResult;
 }
 
 /**
@@ -394,9 +412,20 @@ function reverseWords(str) {
  *   invertCase('Hello, World!') =>  'hELLO, wORLD!'
  *   invertCase('JavaScript is Fun') => 'jAVAsCRIPT IS fUN'
  *   invertCase('12345') => '12345'
+ *   a-z 97 - 122
+ *   A-Z 65 - 90
  */
-function invertCase(/* str */) {
-  throw new Error('Not implemented');
+function invertCase(str) {
+  let sResult = '';
+
+  for (let i = 0; i < str.length; i += 1) {
+    if (str.charCodeAt(i) >= 65 && str.charCodeAt(i) <= 90)
+      sResult += str[i].toLowerCase();
+    else if (str.charCodeAt(i) >= 97 && str.charCodeAt(i) <= 122)
+      sResult += str[i].toUpperCase();
+    else sResult += str[i];
+  }
+  return sResult;
 }
 
 /**
@@ -412,8 +441,8 @@ function invertCase(/* str */) {
  *   getStringFromTemplate('John','Doe') => 'Hello, John Doe!'
  *   getStringFromTemplate('Chuck','Norris') => 'Hello, Chuck Norris!'
  */
-function getStringFromTemplate(/* firstName, lastName */) {
-  throw new Error('Not implemented');
+function getStringFromTemplate(firstName, lastName) {
+  return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
